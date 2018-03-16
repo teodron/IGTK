@@ -12,29 +12,18 @@ namespace IGTK
 		{
 			m_handle = new GenericHandle<TInner>(inData);
 			m_handle->IncRefCount();
-			if (inData != nullptr)
-				m_isValid = new bool(true);
-			else
-				m_isValid = new bool(false);
 		}
 
 		CursorGuard(const CursorGuard& inOtherGuard)
 		{
 			m_handle = inOtherGuard.m_handle;
-			m_isValid = inOtherGuard.m_isValid;
 			m_handle->IncRefCount();
 		}
 
 		CursorGuard& operator =(const CursorGuard& inOtherGuard)
 		{
-			if (m_handle->m_refCount == 1)
-			{
-				delete m_isValid;
-				m_isValid = nullptr;
-			}
 			m_handle->DecRefCount();
 			m_handle = inOtherGuard.m_handle;
-			m_isValid = inOtherGuard.m_isValid;
 			m_handle->IncRefCount();
 			return *this;
 		}
@@ -42,19 +31,12 @@ namespace IGTK
 
 		~CursorGuard()
 		{
-			if (m_handle->m_refCount == 1 || *m_isValid == false)
-			{
-				delete m_isValid;
-			}
 			m_handle->DecRefCount();
 		}
 
 		bool inline IsValid() const
 		{
-			if (m_isValid != nullptr)
-				return *m_isValid;
-			else
-				return false;
+			return m_handle->m_isValid;
 		}
 
 		size_t inline GetRefCount() const
@@ -67,21 +49,14 @@ namespace IGTK
 
 		void SetNewPointer(TInner* inData)
 		{
-			if (m_handle->m_refCount == 1)
-				delete m_isValid;
 			m_handle->DecRefCount();
 			m_handle = new GenericHandle<TInner>(inData);
 			m_handle->IncRefCount();
-			if (inData != nullptr)
-				m_isValid = new bool(true);
-			else
-				m_isValid = new bool(false);
 		}
 
 		void Invalidate()
 		{
-			*m_isValid = false;
-			delete m_handle;
+			m_handle->Invalidate();
 		}
 
 		TInner* operator -> ()
@@ -106,16 +81,22 @@ namespace IGTK
 
 		bool operator == (CursorGuard& iCursorGuard)
 		{
-			if (*m_isValid&&*iCursorGuard.m_isValid)
+			if (m_handle->m_isValid && iCursorGuard.m_handle->m_isValid)
 				return m_handle->m_data == iCursorGuard.m_handle->m_data;
-			else if ((!*m_isValid && !*iCursorGuard.m_isValid) || (!*m_isValid && iCursorGuard == nullptr) || (*this == nullptr && !*iCursorGuard.m_isValid))
+			else if ((!m_handle->m_isValid && !iCursorGuard.m_handle->m_isValid))
 				return true;
 			else
 				return false;
 		}
 
+
+	private:
+		// Prevent heap allocation
+		void * operator new   (size_t);
+		void * operator new[](size_t);
+		void   operator delete   (void *);
+		void   operator delete[](void*);
 	private:
 		GenericHandle<TInner>* m_handle;
-		bool* m_isValid;
 	};
 }
