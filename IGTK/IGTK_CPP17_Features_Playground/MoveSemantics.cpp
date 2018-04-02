@@ -3,9 +3,6 @@
 
 using namespace IGTK;
 
-MoveSemantics::MoveSemantics()
-{
-}
 
 
 MoveSemantics::~MoveSemantics()

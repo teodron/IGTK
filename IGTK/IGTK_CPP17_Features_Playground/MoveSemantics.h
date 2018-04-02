@@ -12,6 +12,7 @@ namespace IGTK
 		{
 			PRINT_FUNC();
 			Sleep(50);
+			Set();
 		}
 
 		GenericResource(GenericResource&& movableResource)
@@ -23,13 +24,31 @@ namespace IGTK
 		GenericResource& operator=(GenericResource&& movableResource)
 		{
 			PRINT_FUNC();
-			std::swap(*this, movableResource);
+			int oldPayload = mPayload;
+			mPayload = movableResource.mPayload;
+			mIsSet = movableResource.mIsSet;
+			movableResource.mPayload = oldPayload;
+			movableResource.mIsSet = false;
 			return *this;
 		}
 
 		void Set()
 		{
 			mIsSet = true;
+		}
+		int GetValue() const
+		{
+			if (mIsSet)
+			{
+				return mPayload;
+			}
+			return 0;
+		}
+
+		void CloneFrom(const GenericResource& other)
+		{
+			PRINT_FUNC();
+			*this = other;
 		}
 
 		GenericResource Clone()
@@ -93,9 +112,28 @@ namespace IGTK
 	class MoveSemantics
 	{
 	public:
-		MoveSemantics();
+		MoveSemantics(int value) : mResource(value)
+		{
+		}
 		~MoveSemantics();
 
+		MoveSemantics(MoveSemantics&& other) = default;
+		MoveSemantics& operator=(MoveSemantics&& other) = default;
+
+		MoveSemantics(const MoveSemantics& other)
+		{
+			mResource.CloneFrom(other.mResource);
+		}
+
+		MoveSemantics& operator=(const MoveSemantics& other)
+		{
+			mResource.CloneFrom(other.mResource);
+		}
+
+		operator int()
+		{
+			return mResource.GetValue();
+		}
 	private:
 		GenericResource mResource;
 	};
