@@ -1,0 +1,20 @@
+This minilibrary implements the functionality required to model generic state machines.
+The elements of the state machine model in this IGTK library are:
+* states: the semantically distinct states of a modeled system. A state is uniquely identified by an Id. Additional information can be stored
+as user data.
+* transitions: a transition is essentially a directed pair of states. The transition involves a _from_ and a _to_ state.
+* events: an event is a transmissible and observable message that is processed by a state machine. It can determine a transition if the state
+machine contains a definition involving a tuple  of the following form: (_from_=current state, _to_=not null state, _triggerevent_=current event)
+* actions: actions are essentially pieces of functionality that are executed prior to, during or after a transition. They are very important
+as these are the main means through which a state machine is perceived by an external system or the means through which state machine transitions
+are reflected on external systems. 
+
+
+Actions in detail.
+1. Pre-transition actions
+When a valid transition is triggered by an event, if the definition of that transition indicates a pre-transition action, this functionality
+is invoked. When the pre-transition action finishes successfully, the current state is still the _from_ state, but the state machine is allowed
+to proceed towards state _to_. If, however, the pre-transition action terminates with a failure code, then the transition is not allowed to
+take place.
+2. Transition actions
+These actions are 

@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IGTK", "IGTK.vcxproj", "{4F
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IGTK_CPP17_Features_Playground", "IGTK_CPP17_Features_Playground\IGTK_CPP17_Features_Playground.vcxproj", "{16A43763-79FA-485B-8997-BD19BF6691DE}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IGTKStateMachine", "..\IGTKStateMachine\IGTKStateMachine.vcxproj", "{5F5732C9-DDEC-4E84-BE2B-E8563BB1417B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{16A43763-79FA-485B-8997-BD19BF6691DE}.Release|x64.Build.0 = Release|x64
 		{16A43763-79FA-485B-8997-BD19BF6691DE}.Release|x86.ActiveCfg = Release|Win32
 		{16A43763-79FA-485B-8997-BD19BF6691DE}.Release|x86.Build.0 = Release|Win32
+		{5F5732C9-DDEC-4E84-BE2B-E8563BB1417B}.Debug|x64.ActiveCfg = Debug|x64
+		{5F5732C9-DDEC-4E84-BE2B-E8563BB1417B}.Debug|x64.Build.0 = Debug|x64
+		{5F5732C9-DDEC-4E84-BE2B-E8563BB1417B}.Debug|x86.ActiveCfg = Debug|Win32
+		{5F5732C9-DDEC-4E84-BE2B-E8563BB1417B}.Debug|x86.Build.0 = Debug|Win32
+		{5F5732C9-DDEC-4E84-BE2B-E8563BB1417B}.Release|x64.ActiveCfg = Release|x64
+		{5F5732C9-DDEC-4E84-BE2B-E8563BB1417B}.Release|x64.Build.0 = Release|x64
+		{5F5732C9-DDEC-4E84-BE2B-E8563BB1417B}.Release|x86.ActiveCfg = Release|Win32
+		{5F5732C9-DDEC-4E84-BE2B-E8563BB1417B}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
