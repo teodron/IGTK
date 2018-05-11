@@ -34,4 +34,8 @@ void TestFunction()
 	ActionFunctor af(&MockFunction);
 	GenericTransitionAction<ActionFunctor> gt = af;
 	gt(nullptr);
+
+	auto boundFunction = std::bind(&MockFunction, std::placeholders::_1);
+	GenericTransitionAction<decltype(boundFunction)> gtB = boundFunction;
+	gtB(nullptr);
 }
