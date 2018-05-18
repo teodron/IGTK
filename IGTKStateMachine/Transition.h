@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 class ITransitionAction;
 class IEventArgs;
 using TransitionActionPtr = std::shared_ptr<ITransitionAction>;

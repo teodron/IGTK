@@ -53,3 +53,9 @@ private:
 	TFunction m_functor;
 };
 
+template <class TFunction>
+GenericTransitionAction<TFunction> CreateTransitionAction(TFunction iFunctor)
+{
+	return GenericTransitionAction<TFunction>(iFunctor);
+}
+

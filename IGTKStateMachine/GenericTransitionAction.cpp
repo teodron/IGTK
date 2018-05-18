@@ -22,6 +22,9 @@ void TestLambda()
 	
 	GenericTransitionAction<decltype(lambda)> gt(lambda);
 	gt(nullptr);
+
+	auto alterantiveGTA = CreateTransitionAction([](const EventArgsPtr& iEventArgs)->bool {return true;});
+	alterantiveGTA(nullptr);
 }
 
 bool MockFunction(const EventArgsPtr& iEventArgs)
@@ -36,6 +39,6 @@ void TestFunction()
 	gt(nullptr);
 
 	auto boundFunction = std::bind(&MockFunction, std::placeholders::_1);
-	GenericTransitionAction<decltype(boundFunction)> gtB = boundFunction;
+	auto gtB = CreateTransitionAction(boundFunction);
 	gtB(nullptr);
 }
