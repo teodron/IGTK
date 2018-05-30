@@ -65,3 +65,9 @@ TransitionActionPtr CreateTransitionActionPtr(TFunction iFunctor)
 	return TransitionActionPtr(new GenericTransitionAction<TFunction>(iFunctor));
 }
 
+template <class TWrappedClass, typename TMethodPointer>
+TransitionActionPtr CreateTransitionActionPtr(TWrappedClass* iWrappedObject, TMethodPointer iMethodPointer)
+{
+	return CreateTransitionActionPtr(ActionDelegate<TWrappedClass>(iWrappedObject, iMethodPointer));
+}
+
