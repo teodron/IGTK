@@ -1,7 +1,7 @@
 #pragma once
-#include <memory>
+#include "ForwardDeclarations.hpp"
+
 class IEventArgs;
-using EventArgsPtr = std::shared_ptr<IEventArgs>;
 
 class ITransitionAction
 {

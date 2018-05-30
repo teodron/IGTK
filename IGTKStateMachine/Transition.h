@@ -1,16 +1,17 @@
 #pragma once
 #include <memory>
-class ITransitionAction;
-class IEventArgs;
-using TransitionActionPtr = std::shared_ptr<ITransitionAction>;
-using EventArgsPtr = std::shared_ptr<IEventArgs>;
+#include "ForwardDeclarations.hpp"
 
 class Transition
 {
 public:
-	using TransitionPtr = std::shared_ptr<Transition>;
 
-	Transition(size_t iEventId, size_t iFromStateId, size_t iToStateId);
+	Transition(size_t iEventId, size_t iFromStateId, size_t iToStateId) :
+		m_triggerEventId(iEventId),
+		m_fromStateId(iFromStateId),
+		m_toStateId(iToStateId)
+	{
+	}
 	
 	void SetPreTransitionAction(const TransitionActionPtr& iAction) 
 	{
@@ -19,15 +20,23 @@ public:
 
 	void SetPostTransitionAction(const TransitionActionPtr& iAction)
 	{
-		m_preTransitionAction = iAction;
+		m_postTransitionAction = iAction;
 	}
 
-	size_t operator()(const IEventArgs& preTransitionArgs, const IEventArgs& postTransitionArgs);
+	size_t operator()(const EventArgsPtr& preTransitionArgs, const EventArgsPtr& postTransitionArgs);
+
+	bool CanTransitionWithEvent(size_t iEventId) const
+	{
+		return m_triggerEventId == iEventId;
+	}
 
 	~Transition();
 
 private:
-	TransitionActionPtr m_preTransitionAction;
-	TransitionActionPtr m_postTransitionAction;
+	size_t				m_triggerEventId;
+	size_t				m_fromStateId;
+	size_t				m_toStateId;
+	TransitionActionPtr m_preTransitionAction	= nullptr;
+	TransitionActionPtr m_postTransitionAction  = nullptr;
 };
 

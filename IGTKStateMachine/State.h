@@ -2,28 +2,48 @@
 #include <string>
 #include <memory>
 #include <vector>
+#include <string>
 
-#include "Transition.h"
+#include "ForwardDeclarations.hpp"
 
 
 class State
 {
-public:
-	using StatePtr = std::shared_ptr<State>;
-	
-	static StatePtr GetById(size_t iId);
-	static StatePtr GetByName(const std::string& iName);
-	static size_t RegisterState(const std::string& iName);
+public:	
+	struct Factory
+	{
+		friend class StateMachine;
+		static StatePtr GetById(size_t iId);
+		static StatePtr GetByName(const std::string& iName);
+		static size_t RegisterState(const std::string& iName);
+	};
+
+	const std::string& GetName() const
+	{
+		return m_name;
+	}
+
+	size_t GetId() const
+	{
+		return m_id;
+	}
+
+	void AddTransition(const TransitionPtr& iOutgoingTransition)
+	{
+		m_outgoingTransition.push_back(iOutgoingTransition);
+	}
+
+	size_t AttemptTransition(size_t iEventId, const EventArgsPtr& iPreEventArgs, const EventArgsPtr& iPostEventArgs);
 
 private:
-	State() = delete;
-	State(const std::string& iName);
 	
+	State() = delete;
+	explicit State(const std::string& iName);
 
 private:
 	size_t									m_id;
 	std::string								m_name;
-	std::vector<Transition::TransitionPtr>	m_outgoingTransition;
+	std::vector<TransitionPtr>				m_outgoingTransition;
 	static size_t							ms_count;
 	static std::vector<StatePtr>			ms_states;
 };

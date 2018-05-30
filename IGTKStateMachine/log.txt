@@ -1,0 +1,26 @@
+int __cdecl main(void) : State machine test
+void __cdecl StateMachine::CreateTransition(unsigned __int64,unsigned __int64,unsigned __int64,const class std::shared_ptr<class ITransitionAction> &,const class std::shared_ptr<class ITransitionAction> &) : Creating transition: A -> B
+void __cdecl StateMachine::CreateTransition(unsigned __int64,unsigned __int64,unsigned __int64,const class std::shared_ptr<class ITransitionAction> &,const class std::shared_ptr<class ITransitionAction> &) : Creating transition: A -> C
+void __cdecl StateMachine::CreateTransition(unsigned __int64,unsigned __int64,unsigned __int64,const class std::shared_ptr<class ITransitionAction> &,const class std::shared_ptr<class ITransitionAction> &) : Creating transition: C -> D
+void __cdecl StateMachine::CreateTransition(unsigned __int64,unsigned __int64,unsigned __int64,const class std::shared_ptr<class ITransitionAction> &,const class std::shared_ptr<class ITransitionAction> &) : Creating transition: B -> D
+void __cdecl StateMachine::CreateTransition(unsigned __int64,unsigned __int64,unsigned __int64,const class std::shared_ptr<class ITransitionAction> &,const class std::shared_ptr<class ITransitionAction> &) : Creating transition: D -> A
+bool __cdecl OutgoingActions::Pre(const class std::shared_ptr<class IEventArgs> &) : a->b
+bool __cdecl OutgoingActions::Pre(const class std::shared_ptr<class IEventArgs> &) : a->b
+bool __cdecl OutgoingActions::Post(const class std::shared_ptr<class IEventArgs> &) : a->b
+bool __cdecl OutgoingActions::Pre(const class std::shared_ptr<class IEventArgs> &) : a->b
+bool __cdecl OutgoingActions::Pre(const class std::shared_ptr<class IEventArgs> &) : a->b
+unsigned __int64 __cdecl State::AttemptTransition(unsigned __int64,const class std::shared_ptr<class IEventArgs> &,const class std::shared_ptr<class IEventArgs> &) : Cannot execute transition from state B
+bool __cdecl ActionFunction(const class std::shared_ptr<class IEventArgs> &) :  Attempting transition function. 
+bool __cdecl ActionFunction(const class std::shared_ptr<class IEventArgs> &) : b->d
+bool __cdecl BindableActionFunction(const class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > &,const class std::shared_ptr<class IEventArgs> &) : d->a
+bool __cdecl ActionFunction(const class std::shared_ptr<class IEventArgs> &) :  Attempting transition function. 
+bool __cdecl ActionFunction(const class std::shared_ptr<class IEventArgs> &) : d->a
+auto __cdecl main::<lambda_39453869ed47d37b6b64eed73c21aa9e>::operator ()(const class std::shared_ptr<class IEventArgs> &) const : d->a
+bool __cdecl OutgoingActions::Pre(const class std::shared_ptr<class IEventArgs> &) : a->c
+bool __cdecl OutgoingActions::Pre(const class std::shared_ptr<class IEventArgs> &) : a->c
+bool __cdecl OutgoingActions::Post(const class std::shared_ptr<class IEventArgs> &) : a->c
+bool __cdecl OutgoingActions::Pre(const class std::shared_ptr<class IEventArgs> &) : a->c
+bool __cdecl OutgoingActions::Pre(const class std::shared_ptr<class IEventArgs> &) : a->c
+bool __cdecl ActionFunction(const class std::shared_ptr<class IEventArgs> &) :  Attempting transition function. 
+bool __cdecl ActionFunction(const class std::shared_ptr<class IEventArgs> &) : c->d
+bool __cdecl main::<lambda_7fb7f814b1189a629c0bb996fb0a194b>::operator ()(const class std::shared_ptr<class IEventArgs> &) const : c->d_post

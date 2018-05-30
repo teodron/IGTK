@@ -59,3 +59,9 @@ GenericTransitionAction<TFunction> CreateTransitionAction(TFunction iFunctor)
 	return GenericTransitionAction<TFunction>(iFunctor);
 }
 
+template <class TFunction>
+TransitionActionPtr CreateTransitionActionPtr(TFunction iFunctor)
+{
+	return TransitionActionPtr(new GenericTransitionAction<TFunction>(iFunctor));
+}
+

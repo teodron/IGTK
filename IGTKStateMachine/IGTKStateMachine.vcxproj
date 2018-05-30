@@ -147,11 +147,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ForwardDeclarations.hpp" />
     <ClInclude Include="GenericTransitionAction.h" />
     <ClInclude Include="IEventArgs.h" />
     <ClInclude Include="ITransitionAction.h" />
+    <ClInclude Include="Logger.h" />
+    <ClInclude Include="Singleton.hpp" />
     <ClInclude Include="State.h" />
+    <ClInclude Include="StateMachine.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="StringEventArgs.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Transition.h" />
   </ItemGroup>
@@ -160,13 +165,16 @@
     <ClCompile Include="IEventArgs.cpp" />
     <ClCompile Include="IGTKStateMachine.cpp" />
     <ClCompile Include="ITransitionAction.cpp" />
+    <ClCompile Include="Logger.cpp" />
     <ClCompile Include="State.cpp" />
+    <ClCompile Include="StateMachine.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="StringEventArgs.cpp" />
     <ClCompile Include="Transition.cpp" />
   </ItemGroup>
   <ItemGroup>
