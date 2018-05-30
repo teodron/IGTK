@@ -147,11 +147,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Macros.h" />
+    <ClInclude Include="MoveSemantics.h" />
+    <ClInclude Include="PerfectForwarding.hpp" />
+    <ClInclude Include="RuleOf5Resource.h" />
+    <ClInclude Include="SharedPtrTests.hpp" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="UniquePtrTests.hpp" />
+    <ClInclude Include="WeakPtrTests.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="IGTK_CPP17_Features_Playground.cpp" />
+    <ClCompile Include="MoveSemantics.cpp" />
+    <ClCompile Include="RuleOf5Resource.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
