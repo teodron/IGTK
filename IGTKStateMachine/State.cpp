@@ -46,13 +46,13 @@ size_t State::Factory::RegisterState(const std::string& iName)
 
 size_t State::AttemptTransition(size_t iEventId, const EventArgsPtr& iPreEventArgs, const EventArgsPtr& iPostEventArgs)
 {
-	auto transitionIt = std::find_if(m_outgoingTransition.begin(), m_outgoingTransition.end(), 
+	auto transitionIt = std::find_if(m_outgoingTransitions.begin(), m_outgoingTransitions.end(), 
 		[iEventId](const TransitionPtr& iTransitionPtr)
 	{
 		return iTransitionPtr->CanTransitionWithEvent(iEventId);
 	});
 
-	if (transitionIt == m_outgoingTransition.end())
+	if (transitionIt == m_outgoingTransitions.end())
 	{
 		IGTKLOG("Cannot execute transition from state " + m_name);
 		return m_id;
