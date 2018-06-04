@@ -30,7 +30,7 @@ public:
 
 	void AddTransition(const TransitionPtr& iOutgoingTransition)
 	{
-		m_outgoingTransition.push_back(iOutgoingTransition);
+		m_outgoingTransitions.push_back(iOutgoingTransition);
 	}
 
 	size_t AttemptTransition(size_t iEventId, const EventArgsPtr& iPreEventArgs, const EventArgsPtr& iPostEventArgs);
@@ -43,7 +43,7 @@ private:
 private:
 	size_t									m_id;
 	std::string								m_name;
-	std::vector<TransitionPtr>				m_outgoingTransition;
+	std::vector<TransitionPtr>				m_outgoingTransitions;
 	static size_t							ms_count;
 	static std::vector<StatePtr>			ms_states;
 };

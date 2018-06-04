@@ -3,6 +3,9 @@
 #include "Transition.h"
 #include "Logger.h"
 #include "State.h"
+#include <algorithm>
+
+std::vector<StateMachine*> StateMachine::ms_runningStateMachines;
 
 StateMachine::StateMachine(const std::initializer_list<const std::string>& iStateNames) :
 	m_stateIds(iStateNames.size())
@@ -13,11 +16,14 @@ StateMachine::StateMachine(const std::initializer_list<const std::string>& iStat
 		m_stateIds[stateIndex++] = State::Factory::RegisterState(stateName);
 	}
 	m_activeStateId = m_stateIds[0];
+
+	ms_runningStateMachines.push_back(this);
 }
 
 
 StateMachine::~StateMachine()
 {
+	ms_runningStateMachines.erase(std::remove(ms_runningStateMachines.begin(), ms_runningStateMachines.end(), this), ms_runningStateMachines.end());
 }
 
 void StateMachine::CreateTransition(size_t iTriggerEvent, size_t iFromState, size_t iToState, const TransitionActionPtr& iPre, const TransitionActionPtr& iPost)
@@ -29,6 +35,7 @@ void StateMachine::CreateTransition(size_t iTriggerEvent, size_t iFromState, siz
 	transition->SetPreTransitionAction(iPre);
 	transition->SetPostTransitionAction(iPost);
 	fromState->AddTransition(transition);
+	SubscribeToEvent(iTriggerEvent);
 }
 
 
@@ -39,4 +46,23 @@ bool StateMachine::OnEvent(size_t iEventId, const EventArgsPtr& iPreEventArgs, c
 		return false;
 	m_activeStateId = currState->AttemptTransition(iEventId, iPreEventArgs, iPostEventArgs);
 	return true;
+}
+
+void StateMachine::NotifyEvent(size_t iEventId, const EventArgsPtr& iPreEventArgs, const EventArgsPtr& iPostEventArgs)
+{
+	for (const auto stateMachine : ms_runningStateMachines)
+	{
+		if (stateMachine->AcceptsEvent(iEventId))
+		{
+			bool eventHandledSuccessfully = stateMachine->OnEvent(iEventId, iPreEventArgs, iPostEventArgs);
+			if (eventHandledSuccessfully)
+			{
+				IGTKLOG("Transition successful.\n");
+			}
+			else
+			{
+				IGTKLOG("Transition failed.\n");
+			}
+		}
+	}
 }
