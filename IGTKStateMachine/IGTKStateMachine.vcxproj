@@ -151,6 +151,7 @@
     <ClInclude Include="GenericTransitionAction.h" />
     <ClInclude Include="IEventArgs.h" />
     <ClInclude Include="ITransitionAction.h" />
+    <ClInclude Include="LasProcessActions.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="Singleton.hpp" />
     <ClInclude Include="State.h" />
@@ -165,6 +166,7 @@
     <ClCompile Include="IEventArgs.cpp" />
     <ClCompile Include="IGTKStateMachine.cpp" />
     <ClCompile Include="ITransitionAction.cpp" />
+    <ClCompile Include="LasProcessActions.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="StateMachine.cpp" />

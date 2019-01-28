@@ -1,12 +1,18 @@
 #include "stdafx.h"
 #include "Logger.h"
 #include "Singleton.hpp"
+#include <chrono>
+#include <ctime>
 
 using LoggerSingleton = IGTK::Singleton<Logger>;
 
 Logger::Logger()
 {
-	m_logStream.open("log.txt");
+	auto currentTime = std::chrono::system_clock::now();
+	std::time_t nowTime = std::chrono::system_clock::to_time_t(currentTime);
+	char dateTime[1024];
+	sprintf_s( dateTime, 1024, "%llu", nowTime);
+	m_logStream.open("Log_" + std::string(dateTime) + ".txt");
 }
 
 
