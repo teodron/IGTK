@@ -74,3 +74,8 @@ The following agenda items are extracted from the [educative.io Coderust guide](
   * Implement expression evaluator using either of the above classes - 4h
   
  
+## Programming language specifics (C++)
+* **week**: X. **time needed:** h hours
+* **items**
+  * Encapsulation and inheritance: private, protected, public access rules. Illustrate access through inheritance for both class (static) and object methods or members. - 1h
+  * Construction and destruction: initialization order, destruction order, rule of 5, construction/destruction order for multiple inheritance and virtual inheritance chains; initialization, delegate constructor, delete, default constructors, move constructor, initialization list, constructor initialization and inheritance, default member initilization with values
