@@ -41,3 +41,36 @@ The following agenda items are extracted from the [educative.io Coderust guide](
   * Given a text and a pattern, determine if the pattern matches with text completely or not using regular expression matching. For simplicity assume that the pattern may contain only two operators i.e. '.' and '*'. Operator '*' in pattern means that the character preceding '*' may not appear or may appear any number of times in text. Operator '.' matches with any character in text exactly once. - 2.5h
   * Given a dictionary of words and an input string tell whether the input string can be completely segmented into dictionary words. - 1.5h
   * Given a string find all substrings that are palindromes. - 1.5h
+  
+### 5. Trees
+* **week**: 5. **time needed:** 8 hours
+* **items**
+  * Implement binary tree class - 1h
+  * Implement `is_equal` equality check operator: Given roots of two binary trees, determine if these trees are identical or not. - 0.5h
+  * Implement the `in_order` traversal of the tree class. - 0.5h
+  * Implement the iterative version of the `in_order` traversal  method. - 0.5h
+  * Given a key of a _bynary search_ tree, find the key of the tree which is next in the `in_order` traversal list. - 0.5h
+  * Display the keys of a binary tree by level, on separate lines for each level. - 0.5h
+  * Implement a method that checks for a tree class if the tree is a BST. - 0.5h
+  * Convert a BST to a double-linked list that has the same order as the `in_order` traversal list. - 0.5h
+  * Print tree perimeter, i.e. list of all leaf nodes. - 0.5h
+  * Implement a derived tree class that connnects the nodes at each level in a list fashion. - 0.5h
+  * Implement tree `serialize` and `deserialize` methods (e.g. save and load tree to/from a text file). - 1h
+  * Inorder successor of a node in binary tree is the next node in inorder traversal. Write a method to find inorder successor of a given binary tree node in binary search tree given parent pointers. - 0.5h
+  * Implement the `mirror` method which swaps the left and right children of every node of a binary tree. - 0.5h
+* **week**: 6. **time needed:** 8 hours
+* **items**
+  * Implement `delete_node` method for a binary search tree, maintaining the BST property. - 3h
+  * Given root of a binary tree, delete any subtrees whose nodes sum up to zero. - 3h
+  * Implement the `insert_value` method for a binary search tree, maintainning the BST property. - 2h
+  
+### 6. Stack and Queue
+* **week**: 7. **time needed:** 8 hours
+* **items**
+  * Implement stack class - 1h
+  * Implement queue class - 1h
+  * Implement stack using queue - 1h
+  * Implement queue using stack - 1h
+  * Implement expression evaluator using either of the above classes - 4h
+  
+ 
