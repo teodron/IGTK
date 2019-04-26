@@ -85,4 +85,40 @@ namespace igtk
         tasks_[taskId]->trigger();
         return taskId;
     }
+
+    void TaskManager::setRunning(bool running)
+    {
+        std::lock_guard<std::mutex> lockGuard{ taskManagerMutex_ };
+        running_ = running;
+        notified_ = true;
+        taskManagerConditionVariable_.notify_one();
+    }
+
+    void TaskManager::setOnNotifyCallback(const std::function<void()>& callback)
+    {
+        std::lock_guard<std::mutex> lockGuard{taskManagerMutex_};
+        onNotifyCallback_.reset(new std::function<void()>{ callback });
+        running_ = true;
+        if (taskManagerWorkerThread_ == nullptr)
+        {
+            taskManagerWorkerThread_.reset(new std::thread{ [this]() {this->loop();} });
+        }
+    }
+
+    void TaskManager::loop()
+    {
+        while (running_)
+        {
+            std::unique_lock<std::mutex> uniqueLock{ taskManagerMutex_ };
+            taskManagerConditionVariable_.wait(uniqueLock, [&]()
+            {
+                return notified_ == true;
+            });
+            if (onNotifyCallback_ != nullptr)
+            {
+                (*onNotifyCallback_)();
+            }
+            notified_ = false;
+        }
+    }
 }

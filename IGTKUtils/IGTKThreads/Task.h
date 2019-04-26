@@ -55,13 +55,17 @@ namespace igtk
 
             static void notify(TaskManager& taskManager)
             {
+                std::lock_guard<std::mutex> lockGuard{ taskManager.taskManagerMutex_ };
                 taskManager.notified_ = true;
                 taskManager.getConditionVariable().notify_one();
             }
         };
 
         size_t execute(const std::function<void()>& workload);
-        
+
+        void setOnNotifyCallback(const std::function<void()>& callback);
+        void setRunning(bool running);
+
     protected:
 
         std::condition_variable& getConditionVariable()
@@ -69,11 +73,16 @@ namespace igtk
             return taskManagerConditionVariable_;
         }
 
+        void loop();
 
     private:
+        bool running_{ false };
         bool notified_{ false };
         std::condition_variable taskManagerConditionVariable_;
         std::vector<std::unique_ptr<Task>> tasks_;
+        std::unique_ptr<std::function<void()>> onNotifyCallback_;
+        std::unique_ptr<std::thread> taskManagerWorkerThread_;
+        std::mutex taskManagerMutex_;
     };
 
 
