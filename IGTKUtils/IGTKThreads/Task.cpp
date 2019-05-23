@@ -32,6 +32,7 @@ namespace igtk
             {
                 return triggered_ == true;
             });
+            lastLockedCode_ = 2;
             triggered_ = false;
             callback_();
             inUse_ = false;
@@ -41,12 +42,11 @@ namespace igtk
 
     void Task::setWork(const std::function<void()>& callback)
     {
-        {
-            std::lock_guard<std::mutex> lockGuard{ mutex_ };
-            callback_ = callback;
-            inUse_ = true;
-        }
-
+        std::lock_guard<std::mutex> lockGuard{ mutex_ };
+        lastLockedCode_ = 0;
+        callback_ = callback;
+        inUse_ = true;
+        
         if (worker_ == nullptr)
         {
             worker_ = std::make_unique<std::thread>( [this]()->void {this->work();} );
@@ -56,6 +56,7 @@ namespace igtk
     void Task::trigger()
     {
         std::lock_guard<std::mutex> lockGuard{ mutex_ };
+        lastLockedCode_ = 1;
         triggered_ = true;
         taskConditionVariable_.notify_one();
     }
@@ -63,6 +64,8 @@ namespace igtk
 
     size_t TaskManager::execute(const std::function<void()>& workload)
     {
+        std::lock_guard<std::mutex> lockGuard{ executeCriticalSection_ };
+        lockCount_++;
         bool taskAvailable = false;
         size_t taskId = -1;
         for (auto& task : tasks_)
@@ -83,26 +86,31 @@ namespace igtk
 
         tasks_[taskId]->setWork(workload);
         tasks_[taskId]->trigger();
+        lockCount_--;
         return taskId;
     }
 
     void TaskManager::setRunning(bool running)
     {
         std::lock_guard<std::mutex> lockGuard{ taskManagerMutex_ };
+        lockCount_++;
         running_ = running;
-        notified_ = true;
+        notifiedCount_++;
         taskManagerConditionVariable_.notify_one();
+        lockCount_--;
     }
 
     void TaskManager::setOnNotifyCallback(const std::function<void()>& callback)
     {
         std::lock_guard<std::mutex> lockGuard{taskManagerMutex_};
+        lockCount_++;
         onNotifyCallback_.reset(new std::function<void()>{ callback });
         running_ = true;
         if (taskManagerWorkerThread_ == nullptr)
         {
             taskManagerWorkerThread_.reset(new std::thread{ [this]() {this->loop();} });
         }
+        lockCount_--;
     }
 
     void TaskManager::loop()
@@ -110,15 +118,18 @@ namespace igtk
         while (running_)
         {
             std::unique_lock<std::mutex> uniqueLock{ taskManagerMutex_ };
+            
             taskManagerConditionVariable_.wait(uniqueLock, [&]()
             {
-                return notified_ == true;
+                return notifiedCount_ > 0;
             });
+            lockCount_++;
             if (onNotifyCallback_ != nullptr)
             {
                 (*onNotifyCallback_)();
             }
-            notified_ = false;
+            notifiedCount_--;
+            lockCount_--;
         }
     }
 }

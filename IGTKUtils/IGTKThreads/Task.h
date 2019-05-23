@@ -1,4 +1,5 @@
 #pragma once
+#include <atomic>
 #include <thread>
 #include <mutex>
 #include <condition_variable>
@@ -28,6 +29,7 @@ namespace igtk
         void trigger();
         bool isInUse() 
         {
+            std::lock_guard<std::mutex> lockGuard{ mutex_ };
             return inUse_;
         }
 
@@ -41,6 +43,7 @@ namespace igtk
         std::condition_variable taskConditionVariable_;
         std::unique_ptr<std::thread> worker_;
         std::function<void()> callback_;
+        int lastLockedCode_{ -1 };
     };
 
     class TaskManager
@@ -56,8 +59,8 @@ namespace igtk
             static void notify(TaskManager& taskManager)
             {
                 std::lock_guard<std::mutex> lockGuard{ taskManager.taskManagerMutex_ };
-                taskManager.notified_ = true;
-                taskManager.getConditionVariable().notify_one();
+                taskManager.notifiedCount_++;
+                taskManager.getConditionVariable().notify_all();
             }
         };
 
@@ -77,12 +80,14 @@ namespace igtk
 
     private:
         bool running_{ false };
-        bool notified_{ false };
+        int notifiedCount_{ 0 };
         std::condition_variable taskManagerConditionVariable_;
         std::vector<std::unique_ptr<Task>> tasks_;
         std::unique_ptr<std::function<void()>> onNotifyCallback_;
         std::unique_ptr<std::thread> taskManagerWorkerThread_;
         std::mutex taskManagerMutex_;
+        std::mutex executeCriticalSection_;
+        std::atomic<int> lockCount_{ 0 };
     };
 
 

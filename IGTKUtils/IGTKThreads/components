@@ -1,0 +1,20 @@
+odo 1 
+gps 6
+cam 2
+las 3
+perc 4
+loc 6
+pred 4
+plan 10
+ctrl 2
+
+start -> odo, gps, cam, las
+odo -> loc, perc, pred, plan
+gps -> loc
+cam -> perc
+las -> perc
+loc -> per, pred, plan
+perc -> loc, pred
+pred -> plan
+plan -> ctrl
+
