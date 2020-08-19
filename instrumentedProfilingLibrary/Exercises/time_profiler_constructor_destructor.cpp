@@ -7,14 +7,14 @@ using namespace std;
 
 class time_profiler{
 	public:
-		time_profiler(int N = 0): codeBlockStartTime(chrono::high_resolution_clock::now()){
+		time_profiler(string blockName): codeBlock(move(blockName)),codeBlockStartTime(chrono::high_resolution_clock::now()){
 
 		}
 
 		~time_profiler(){
 			auto codeBlockEndTime = chrono::high_resolution_clock::now();
 			auto codeBlockExecutionTime = chrono::duration_cast<chrono::microseconds>(codeBlockEndTime - codeBlockStartTime);
-			cout<<"Time Elapsed: "<< codeBlockExecutionTime.count() << " microseconds\n"<<endl;
+			cout<<codeBlock<<" execution time elapsed: "<< codeBlockExecutionTime.count() << " microseconds\n"<<endl;
 		}
 
 	private:
@@ -53,12 +53,11 @@ int main(){
 		cin>>num;
 
 		{
-
-			time_profiler profiler( num );
+			time_profiler profiler("sum code block");
 			sumOfNumbers(num);
 		}
 		{
-			time_profiler profiler( num );
+			time_profiler profiler("sum of square roots code block");
 			sqrtOfNumbersSum(num);
 
 		}
