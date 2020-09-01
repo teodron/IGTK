@@ -35,11 +35,11 @@ void ProfileDataManager::getTimeprofilerdata(time_profiler a) {
 		//test for writing info from time profiler constuctor to file
 		myfile << 10000 <<endl;
 		myfile << a.elapsedTime <<endl; 
+		myfile << a.StartTimeStamp_us << endl;
 
 		//test for writing info from time profiler destructor to file
-		//myfile << a.copyofcodeBlockStartTime << endl;
-		//myfile << a.copyofcodeBlockEndTime << endl;
-		//myfile << a.copyofcodeBlockExecutionTime<< endl;
+		myfile << a.EndTimeStamp_us<< endl;
+		myfile << a.BlockExecutionTime_us << endl;
 	}
 
 }
