@@ -9,10 +9,15 @@ class time_profiler{
 		time_profiler() = default;
 		time_profiler(std::string blockName);
 		~time_profiler();
+	         
+		void constructorProcesses();
+		void destructorProcesses();
 
-		//const std::chrono::time_point<std::chrono::high_resolution_clock> copyofcodeBlockStartTime;
-		//const std::chrono::time_point<std::chrono::high_resolution_clock> copyofcodeBlockEndTime;
-        //const std::chrono::microseconds copyofcodeBlockExecutionTime;
+		//time stamp in microseconds.
+		uint64_t StartTimeStamp_us;
+		uint64_t EndTimeStamp_us;
+		uint64_t BlockExecutionTime_us;
+	
 		int elapsedTime;
 
 	private:
