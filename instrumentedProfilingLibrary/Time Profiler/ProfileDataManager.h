@@ -3,20 +3,30 @@
 #include <string>
 #include <chrono>
 #include <fstream>
-#include "timeprofiler.hh"
-
 
 class ProfileDataManager {
+	
 public:
-	ProfileDataManager();
-	~ProfileDataManager();
-
-	time_profiler setTimeprofilerInsatance(std::string name) const;
-	void getTimeprofilerdata(time_profiler tp);
-	void managerMain(std::string name);
+    static ProfileDataManager* GetInstance(const std::string& name);
+    ProfileDataManager(ProfileDataManager& other) = delete;
+    void operator=(const ProfileDataManager&) = delete;
+    
+    void displayTimerData();
+    void storeTimerData();
+    void getTimerData(const std::string& name, std::chrono::microseconds timetaken, std::chrono::time_point<std::chrono::high_resolution_clock> codeBlockStartTime,
+        std::chrono::time_point<std::chrono::high_resolution_clock> codeBlockEndTime);
 
 private:
-	std::ofstream myfile;
-	time_profiler tp;
+    std::string codeBlockname;
+    uint64_t StartTimeStamp_us;
+    uint64_t EndTimeStamp_us;
+    uint64_t ExecutionTime;
+
+    std::ofstream myfile;
+
+    static ProfileDataManager* profiledatamanager;
+    ProfileDataManager(const std::string name);
+    ~ProfileDataManager();
+	
 };
 
