@@ -1,3 +1,4 @@
+
 #pragma once
 
 #include<iostream>
@@ -10,4 +11,3 @@ public:
 	void sqrtOfNumbersSum(int num);
 
 };
-

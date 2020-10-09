@@ -3,69 +3,59 @@
 
 using namespace std;
 
-ProfileDataManager* ProfileDataManager::profiledatamanager = nullptr;
+profileDataManager *profileDataManager::profiledatamanager = nullptr;
 
-ProfileDataManager::ProfileDataManager(const string name){
+profileDataManager::profileDataManager(){
 	
-	myfile.open("time.txt");
-	
-	if (myfile.is_open()) {
-	    cout << "myfile is open \n" << endl;
-	}
-
 }
 
-
-ProfileDataManager:: ~ProfileDataManager() {
+/*
+profileDataManager:: ~profileDataManager() {
 	
-	myfile.close();
-
 }
+*/
 
-
-ProfileDataManager* ProfileDataManager::GetInstance(const string& value) {
+profileDataManager* profileDataManager::getInstance() {
 
 	if (profiledatamanager == nullptr) {
-		profiledatamanager = new ProfileDataManager(value);
+		profiledatamanager = new profileDataManager();
 	}
 	
 	return profiledatamanager;
-
 }
 
 
-void ProfileDataManager::storeTimerData() {
+void profileDataManager::storeTimerData() {
 
-    cout << "\nWriting data into my file.\n";
     if (myfile.is_open()) {
-        myfile << "\nWriting data into my file.\n";
+
         myfile << "Code block name: "<< codeBlockname << endl;
-        myfile << "Start time stamp: " << StartTimeStamp_us << endl;
-        myfile << "End time stamp: " << EndTimeStamp_us << endl;
-        myfile << "Execution time taken: " << ExecutionTime << endl;
+        myfile << "Start time stamp : " << startTimeStamp << endl;
+        myfile << "End time stamp: " << endTimeStamp << endl;
+        myfile << "Execution time taken [us]: " << executionTime << endl;
+        myfile << endl;
     }
-	
 }
 
 
-void ProfileDataManager::getTimerData(const string& name, chrono::microseconds timetaken, chrono::time_point<std::chrono::high_resolution_clock> codeBlockStartTime,
+void profileDataManager::getTimerData(const string& name, chrono::microseconds timetaken, chrono::time_point<std::chrono::high_resolution_clock> codeBlockStartTime,
     chrono::time_point<std::chrono::high_resolution_clock> codeBlockEndTime) {
 
     codeBlockname = name;
-    StartTimeStamp_us = chrono::duration_cast<chrono::microseconds>(codeBlockStartTime.time_since_epoch()).count();
-    EndTimeStamp_us = chrono::duration_cast<chrono::microseconds>(codeBlockEndTime.time_since_epoch()).count();
-    ExecutionTime = timetaken.count();
-
+    startTimeStamp = chrono::duration_cast<chrono::microseconds>(codeBlockStartTime.time_since_epoch()).count();
+    endTimeStamp = chrono::duration_cast<chrono::microseconds>(codeBlockEndTime.time_since_epoch()).count();
+    executionTime = timetaken.count();
 }
 
 
-void ProfileDataManager::displayTimerData() {
+void profileDataManager::displayTimerData() {
 
-    cout << "\nInformation display from ProfileDataManager:" << endl;
+    cout << "\nInformation display from Profile Data Manager:" << endl;
     cout << "Code block name:  "<< codeBlockname << endl;
-    cout << "Start time stamp: "<< StartTimeStamp_us << endl;
-    cout << "End time stamp:   "<< EndTimeStamp_us << endl;
-    cout << "Execution time taken: "<< ExecutionTime << endl;
+    cout << "Start time stamp: "<< startTimeStamp << endl;
+    cout << "End time stamp:   "<< endTimeStamp << endl;
+    cout << "Execution time taken [us]: "<< executionTime << endl;
 
 }
+
 

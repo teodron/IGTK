@@ -3,10 +3,10 @@
 #include <chrono>
 #include <string>
 
-class time_profiler{
+class timeProfiler{
 	public:
-		time_profiler(std::string blockName);
-		~time_profiler();
+		timeProfiler(std::string blockName);
+		~timeProfiler();
 	
 	private:
 		std::string codeBlock;
@@ -15,4 +15,3 @@ class time_profiler{
 		std::chrono::microseconds  codeBlockExecutionTime;
 	
 };
-

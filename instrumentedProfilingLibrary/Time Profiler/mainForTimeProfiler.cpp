@@ -8,10 +8,12 @@ using namespace std;
 int main() {
 
 	operations op;
-	ProfileDataManager* tp = ProfileDataManager::GetInstance("code block");
+  
+	profileDataManager* tp = profileDataManager::getInstance();
+	tp->myfile.open("codeBlockTimeProfileData.txt");
 
 	{
-		time_profiler time_profiler("sum code block");
+		timeProfiler timeProfiler("sum code block");
 		op.sumOfNumbers(1000);
 		
 	}
@@ -20,7 +22,7 @@ int main() {
 	tp->storeTimerData();
 	
 	{
-		time_profiler time_profiler("square root code block");
+		timeProfiler timeProfiler("square root code block");
 		op.sqrtOfNumbersSum(10000);
 
 	}
@@ -28,6 +30,8 @@ int main() {
 	tp->displayTimerData();
 	tp->storeTimerData();
 
+	tp->myfile.close();
+  
 	return 0;
 
 }
