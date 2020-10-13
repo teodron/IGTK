@@ -5,7 +5,7 @@
 
 using namespace std;
 
-timeProfiler::timeProfiler(string blockName):codeBlock(move(blockName)), codeBlockStartTime(chrono::high_resolution_clock::now()){
+timeProfiler::timeProfiler(const string &blockName):codeBlock(blockName), codeBlockStartTime(chrono::high_resolution_clock::now()){
 
 }
 
