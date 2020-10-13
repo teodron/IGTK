@@ -5,7 +5,7 @@
 
 class timeProfiler{
 	public:
-		timeProfiler(std::string blockName);
+		timeProfiler(const std::string &blockName);
 		~timeProfiler();
 	
 	private:
